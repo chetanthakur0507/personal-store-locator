@@ -21,7 +21,13 @@ export default function AddItemPage() {
     quantity: '',
     minStockLevel: '',
     description: '',
+    price: '',
+    imageUrl: '',
   });
+
+  const [imageUploadType, setImageUploadType] = useState<'url' | 'file'>('url');
+  const [imagePreview, setImagePreview] = useState('');
+  const [imageFile, setImageFile] = useState<File | null>(null);
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -60,6 +66,8 @@ export default function AddItemPage() {
         quantity: parseInt(formData.quantity),
         minStockLevel: parseInt(formData.minStockLevel) || 0,
         description: formData.description,
+        price: parseFloat(formData.price) || 0,
+        image: imagePreview,
         createdBy: user?.username || 'admin',
       };
 
@@ -97,6 +105,31 @@ export default function AddItemPage() {
       ...formData,
       [e.target.name]: e.target.value,
     });
+  };
+
+  const handleImageUrlChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const url = e.target.value;
+    setFormData({
+      ...formData,
+      imageUrl: url,
+    });
+    setImagePreview(url);
+  };
+
+  const handleImageFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setImageFile(file);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result as string);
+        setFormData({
+          ...formData,
+          imageUrl: reader.result as string,
+        });
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   if (!user) {
@@ -197,7 +230,100 @@ export default function AddItemPage() {
                   placeholder="Optional description..."
                 />
               </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Price (₹)
+                </label>
+                <input
+                  type="number"
+                  name="price"
+                  value={formData.price}
+                  onChange={handleChange}
+                  step="0.01"
+                  min="0"
+                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+                  placeholder="e.g., 299.99"
+                />
+              </div>
             </div>
+          </div>
+
+          {/* Image Upload */}
+          <div className="mb-8">
+            <h2 className="text-lg font-semibold text-gray-900 mb-4">
+              🖼️ Product Image
+            </h2>
+            
+            {/* Upload Type Toggle */}
+            <div className="flex gap-4 mb-6">
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input
+                  type="radio"
+                  value="url"
+                  checked={imageUploadType === 'url'}
+                  onChange={(e) => setImageUploadType(e.target.value as 'url' | 'file')}
+                  className="w-4 h-4"
+                />
+                <span className="text-sm font-medium text-gray-700">Image URL</span>
+              </label>
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input
+                  type="radio"
+                  value="file"
+                  checked={imageUploadType === 'file'}
+                  onChange={(e) => setImageUploadType(e.target.value as 'url' | 'file')}
+                  className="w-4 h-4"
+                />
+                <span className="text-sm font-medium text-gray-700">Upload File</span>
+              </label>
+            </div>
+
+            {/* Image URL Input */}
+            {imageUploadType === 'url' && (
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Image URL
+                </label>
+                <input
+                  type="url"
+                  value={formData.imageUrl}
+                  onChange={handleImageUrlChange}
+                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+                  placeholder="https://example.com/image.jpg"
+                />
+              </div>
+            )}
+
+            {/* File Upload Input */}
+            {imageUploadType === 'file' && (
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Choose Image File
+                </label>
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageFileChange}
+                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+                />
+              </div>
+            )}
+
+            {/* Image Preview */}
+            {imagePreview && (
+              <div className="mt-4">
+                <p className="text-sm font-medium text-gray-700 mb-2">Preview:</p>
+                <div className="relative w-full h-48 bg-gray-100 rounded-lg overflow-hidden">
+                  <img
+                    src={imagePreview}
+                    alt="Preview"
+                    className="w-full h-full object-cover"
+                    onError={() => setImagePreview('')}
+                  />
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Location Details */}

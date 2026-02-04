@@ -3,6 +3,16 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { getAuthUser } from '@/lib/auth';
+import Navbar from '../components/Navbar';
+import Hero from '../components/Hero';
+import Categories from '../components/Categories';
+import Offers from '../components/Offers';
+import StoreView from '../components/StoreView';
+import Cta from '../components/Cta';
+import Footer from '../components/Footer';
+import Section from '../components/Section';
+import StoreMapBanner from '../components/StoreMapBanner';
+import Testimonials from '../components/Testimonials';
 
 export default function Home() {
   const router = useRouter();
@@ -17,18 +27,28 @@ export default function Home() {
       } else {
         router.push('/user/search');
       }
-    } else {
-      // Not logged in, redirect to login
-      router.push('/login');
     }
   }, [router]);
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100">
-      <div className="text-center">
-        <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-blue-600 mx-auto"></div>
-        <p className="mt-4 text-gray-600 font-medium">Loading...</p>
-      </div>
+    <div className="min-h-screen bg-gradient-to-br from-amber-50 via-white to-rose-50">
+      <Navbar />
+      <Hero />
+      <Categories />
+      <Offers />
+      <StoreView />
+      <Section
+        title="Top Searched This Week"
+        subtitle="Items everyone is looking for"
+      />
+      <Section
+        title="Featured Essentials"
+        subtitle="Handpicked items for your daily needs"
+      />
+      <StoreMapBanner />
+      <Testimonials />
+      <Cta />
+      <Footer />
     </div>
   );
 }

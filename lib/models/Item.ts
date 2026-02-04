@@ -47,6 +47,16 @@ const ItemSchema = new Schema(
       default: '',
       trim: true,
     },
+    price: {
+      type: Number,
+      default: 0,
+      min: 0,
+    },
+    image: {
+      type: String,
+      default: '',
+      trim: true,
+    },
     createdBy: {
       type: String,
       required: true,

@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { setAuthUser } from '@/lib/auth';
-import { authenticateUser } from '@/lib/data';
 import { Store, Lock, User, Loader } from 'lucide-react';
 
 export default function LoginPage() {
@@ -20,29 +19,38 @@ export default function LoginPage() {
     setError('');
     setLoading(true);
 
-    // Simulate API call
-    setTimeout(() => {
-      const user = authenticateUser(username, password);
+    try {
+      const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, password }),
+      });
 
-      if (user) {
+      const result = await response.json();
+
+      if (response.ok && result.success) {
         setAuthUser({
-          id: user.id,
-          username: user.username,
-          role: user.role,
-          name: user.name,
+          id: result.data.id,
+          username: result.data.username,
+          role: result.data.role,
+          name: result.data.name,
         });
 
-        // Redirect based on role
-        if (user.role === 'admin') {
+        if (result.data.role === 'admin') {
           router.push('/admin/dashboard');
         } else {
           router.push('/user/search');
         }
       } else {
-        setError('Invalid username or password');
-        setLoading(false);
+        setError(result.error || 'Invalid username or password');
       }
-    }, 500);
+    } catch (error: any) {
+      setError(error.message || 'Login failed');
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleInitialize = async () => {
@@ -168,17 +176,10 @@ export default function LoginPage() {
           </div>
           <div className="mt-6 pt-6 border-t border-gray-200">
             <p className="text-sm text-gray-600 font-medium mb-3">
-              Demo Accounts:
+              Account Credentials:
             </p>
-            <div className="grid grid-cols-2 gap-3 text-xs">
-              <div className="bg-blue-50 p-3 rounded-lg">
-                <p className="font-semibold text-blue-900 mb-1">👑 Admin</p>
-                <p className="text-blue-700">admin / admin123</p>
-              </div>
-              <div className="bg-green-50 p-3 rounded-lg">
-                <p className="font-semibold text-green-900 mb-1">👤 Staff</p>
-                <p className="text-green-700">staff / staff123</p>
-              </div>
+            <div className="bg-blue-50 p-3 rounded-lg text-xs text-blue-800">
+              Use the admin or staff credentials created from the Admin Panel.
             </div>
           </div>
         </div>

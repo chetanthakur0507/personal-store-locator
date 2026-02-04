@@ -29,6 +29,16 @@ export default function AdminDashboard() {
   const [stats, setStats] = useState<Stats | null>(null);
   const [lowStockCount, setLowStockCount] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [staffUsers, setStaffUsers] = useState<any[]>([]);
+  const [staffForm, setStaffForm] = useState({ name: '', username: '', password: '' });
+  const [editingStaffId, setEditingStaffId] = useState<string | null>(null);
+  const [showAdminForm, setShowAdminForm] = useState(false);
+  const [showStaffForm, setShowStaffForm] = useState(false);
+  const [adminForm, setAdminForm] = useState({ name: '', username: '', password: '', currentPassword: '' });
+  const [staffMessage, setStaffMessage] = useState('');
+  const [adminMessage, setAdminMessage] = useState('');
+  const [staffLoading, setStaffLoading] = useState(false);
+  const [adminLoading, setAdminLoading] = useState(false);
 
   useEffect(() => {
     const currentUser = getAuthUser();
@@ -39,7 +49,14 @@ export default function AdminDashboard() {
     }
 
     setUser(currentUser);
+    setAdminForm({
+      name: currentUser.name || 'Admin',
+      username: currentUser.username || '',
+      password: '',
+      currentPassword: '',
+    });
     fetchStats();
+    fetchStaff();
   }, [router]);
 
   const fetchStats = async () => {
@@ -85,6 +102,123 @@ export default function AdminDashboard() {
       });
     } finally {
       setLoading(false);
+    }
+  };
+
+  const fetchStaff = async () => {
+    try {
+      const response = await fetch('/api/users');
+      const data = await response.json();
+      if (data.success) {
+        setStaffUsers(data.data || []);
+      }
+    } catch (error) {
+      console.error('Error fetching staff:', error);
+    }
+  };
+
+  const handleStaffCreate = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setStaffLoading(true);
+    setStaffMessage('');
+
+    try {
+      const isEditing = Boolean(editingStaffId);
+      const response = await fetch(
+        isEditing ? `/api/users/${editingStaffId}` : '/api/users',
+        {
+          method: isEditing ? 'PATCH' : 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(staffForm),
+        }
+      );
+
+      const data = await response.json();
+      if (response.ok && data.success) {
+        setStaffMessage(isEditing ? '✅ Staff updated' : '✅ Staff account created');
+        setStaffForm({ name: '', username: '', password: '' });
+        setEditingStaffId(null);
+        fetchStaff();
+      } else {
+        setStaffMessage(`❌ ${data.error || 'Failed to create staff'}`);
+      }
+    } catch (error: any) {
+      setStaffMessage(`❌ ${error.message}`);
+    } finally {
+      setStaffLoading(false);
+    }
+  };
+
+  const handleStaffEdit = (staff: any) => {
+    setEditingStaffId(staff.id);
+    setStaffForm({ name: staff.name, username: staff.username, password: '' });
+    setStaffMessage('');
+  };
+
+  const handleStaffDelete = async (staffId: string) => {
+    const confirmDelete = window.confirm('Delete this staff account?');
+    if (!confirmDelete) {
+      return;
+    }
+
+    setStaffLoading(true);
+    setStaffMessage('');
+    try {
+      const response = await fetch(`/api/users/${staffId}`, {
+        method: 'DELETE',
+      });
+      const data = await response.json();
+      if (response.ok && data.success) {
+        setStaffMessage('✅ Staff deleted');
+        if (editingStaffId === staffId) {
+          setEditingStaffId(null);
+          setStaffForm({ name: '', username: '', password: '' });
+        }
+        fetchStaff();
+      } else {
+        setStaffMessage(`❌ ${data.error || 'Failed to delete staff'}`);
+      }
+    } catch (error: any) {
+      setStaffMessage(`❌ ${error.message}`);
+    } finally {
+      setStaffLoading(false);
+    }
+  };
+
+  const handleStaffCancelEdit = () => {
+    setEditingStaffId(null);
+    setStaffForm({ name: '', username: '', password: '' });
+    setStaffMessage('');
+  };
+
+  const handleAdminUpdate = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setAdminLoading(true);
+    setAdminMessage('');
+
+    try {
+      const response = await fetch('/api/users/admin', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(adminForm),
+      });
+
+      const data = await response.json();
+      if (response.ok && data.success) {
+        setAdminMessage('✅ Admin credentials updated');
+        setAdminForm({
+          name: data.data.name,
+          username: data.data.username,
+          password: '',
+          currentPassword: '',
+        });
+      } else {
+        setAdminMessage(`❌ ${data.error || 'Failed to update admin'}`);
+      }
+    } catch (error: any) {
+      setAdminMessage(`❌ ${error.message}`);
+    } finally {
+      setAdminLoading(false);
     }
   };
 
@@ -229,6 +363,209 @@ export default function AdminDashboard() {
                   <span className="text-sm font-medium text-gray-700">Search Items</span>
                 </Link>
               </div>
+            </div>
+
+            {/* Admin & Staff Management */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+              {/* Admin Credentials Section */}
+              <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
+                <button
+                  onClick={() => setShowAdminForm(!showAdminForm)}
+                  className="w-full flex items-center justify-between mb-4"
+                >
+                  <div className="flex items-center gap-2">
+                    <Settings className="w-5 h-5 text-blue-600" />
+                    <h2 className="text-lg font-semibold text-gray-900">Admin Credentials</h2>
+                  </div>
+                  <span className={`text-2xl transition-transform ${showAdminForm ? 'rotate-180' : ''}`}>
+                    ▼
+                  </span>
+                </button>
+
+                {showAdminForm && (
+                  <form onSubmit={handleAdminUpdate} className="space-y-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Name</label>
+                      <input
+                        type="text"
+                        value={adminForm.name}
+                        onChange={(e) => setAdminForm({ ...adminForm, name: e.target.value })}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+                        placeholder="Admin name"
+                        required
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Username</label>
+                      <input
+                        type="text"
+                        value={adminForm.username}
+                        onChange={(e) => setAdminForm({ ...adminForm, username: e.target.value })}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+                        placeholder="Admin username"
+                        required
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Current Admin Password</label>
+                      <input
+                        type="password"
+                        value={adminForm.currentPassword}
+                        onChange={(e) => setAdminForm({ ...adminForm, currentPassword: e.target.value })}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+                        placeholder="Enter current password"
+                        required
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                      <input
+                        type="password"
+                        value={adminForm.password}
+                        onChange={(e) => setAdminForm({ ...adminForm, password: e.target.value })}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+                        placeholder="New password"
+                        required
+                      />
+                    </div>
+                    {adminMessage && (
+                      <p className={`text-sm ${adminMessage.includes('✅') ? 'text-green-700' : 'text-red-700'}`}>
+                        {adminMessage}
+                      </p>
+                    )}
+                    <button
+                      type="submit"
+                      disabled={adminLoading}
+                      className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-lg transition disabled:opacity-50"
+                    >
+                      {adminLoading ? 'Saving...' : 'Save Admin Credentials'}
+                    </button>
+                  </form>
+                )}
+              </div>
+
+              {/* Create Staff Section */}
+              <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
+                <button
+                  onClick={() => setShowStaffForm(!showStaffForm)}
+                  className="w-full flex items-center justify-between mb-4"
+                >
+                  <div className="flex items-center gap-2">
+                    <Plus className="w-5 h-5 text-green-600" />
+                    <h2 className="text-lg font-semibold text-gray-900">
+                      {editingStaffId ? 'Edit Staff Account' : 'Create Staff Account'}
+                    </h2>
+                  </div>
+                  <span className={`text-2xl transition-transform ${showStaffForm ? 'rotate-180' : ''}`}>
+                    ▼
+                  </span>
+                </button>
+
+                {showStaffForm && (
+                  <form onSubmit={handleStaffCreate} className="space-y-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                      <input
+                        type="text"
+                        value={staffForm.name}
+                        onChange={(e) => setStaffForm({ ...staffForm, name: e.target.value })}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+                        placeholder="Staff name"
+                        required
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Username</label>
+                      <input
+                        type="text"
+                        value={staffForm.username}
+                        onChange={(e) => setStaffForm({ ...staffForm, username: e.target.value })}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+                        placeholder="Staff username"
+                        required
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                      <input
+                        type="password"
+                        value={staffForm.password}
+                        onChange={(e) => setStaffForm({ ...staffForm, password: e.target.value })}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+                        placeholder={editingStaffId ? 'Leave blank to keep current password' : 'Staff password'}
+                        required={!editingStaffId}
+                      />
+                    </div>
+                    {staffMessage && (
+                      <p className={`text-sm ${staffMessage.includes('✅') ? 'text-green-700' : 'text-red-700'}`}>
+                        {staffMessage}
+                      </p>
+                    )}
+                    <div className="flex gap-3">
+                      <button
+                        type="submit"
+                        disabled={staffLoading}
+                        className="flex-1 bg-green-600 hover:bg-green-700 text-white font-semibold py-2 rounded-lg transition disabled:opacity-50"
+                      >
+                        {staffLoading
+                          ? editingStaffId
+                            ? 'Saving...'
+                            : 'Creating...'
+                          : editingStaffId
+                            ? 'Save Changes'
+                            : 'Create Staff Account'}
+                      </button>
+                      {editingStaffId && (
+                        <button
+                          type="button"
+                          onClick={handleStaffCancelEdit}
+                          className="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold rounded-lg transition"
+                        >
+                          Cancel
+                        </button>
+                      )}
+                    </div>
+                  </form>
+                )}
+              </div>
+            </div>
+
+            {/* Staff List */}
+            <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100 mb-8">
+              <h2 className="text-lg font-semibold text-gray-900 mb-4">User Accounts</h2>
+              {staffUsers.length === 0 ? (
+                <p className="text-sm text-gray-500">No staff accounts yet.</p>
+              ) : (
+                <div className="divide-y divide-gray-100">
+                  {staffUsers.map((staff) => (
+                    <div key={staff.id} className="py-3 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+                      <div>
+                        <p className="text-sm font-semibold text-gray-900">{staff.name}</p>
+                        <p className="text-xs text-gray-500">@{staff.username}</p>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs px-2 py-1 rounded-full bg-gray-100 text-gray-600">
+                          {staff.role}
+                        </span>
+                        <button
+                          onClick={() => handleStaffEdit(staff)}
+                          className="text-xs px-3 py-1 rounded-lg bg-blue-50 text-blue-700 hover:bg-blue-100"
+                        >
+                          Edit
+                        </button>
+                        {staff.role !== 'admin' && (
+                          <button
+                            onClick={() => handleStaffDelete(staff.id)}
+                            className="text-xs px-3 py-1 rounded-lg bg-red-50 text-red-700 hover:bg-red-100"
+                          >
+                            Delete
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
 
             {/* Category Breakdown */}
