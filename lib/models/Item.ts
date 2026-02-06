@@ -62,6 +62,20 @@ const ItemSchema = new Schema(
       required: true,
       trim: true,
     },
+    totalSoldUnits: {
+      type: Number,
+      default: 0,
+      min: 0,
+    },
+    saleCount: {
+      type: Number,
+      default: 0,
+      min: 0,
+    },
+    lastSoldAt: {
+      type: Date,
+      default: null,
+    },
   },
   {
     timestamps: true,

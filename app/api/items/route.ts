@@ -8,6 +8,7 @@ export async function GET(request: NextRequest) {
 
     const searchQuery = request.nextUrl.searchParams.get('search') || '';
     const category = request.nextUrl.searchParams.get('category') || '';
+    const trending = request.nextUrl.searchParams.get('trending') === 'true';
 
     let query: any = {};
 
@@ -23,7 +24,14 @@ export async function GET(request: NextRequest) {
       query.category = category;
     }
 
-    const items = await Item.find(query).sort({ createdAt: -1 });
+    let sortOrder: any = { createdAt: -1 };
+    
+    // If trending is requested, sort by totalSoldUnits and saleCount
+    if (trending) {
+      sortOrder = { totalSoldUnits: -1, saleCount: -1, createdAt: -1 };
+    }
+
+    const items = await Item.find(query).sort(sortOrder);
 
     return NextResponse.json(
       { success: true, data: items },
