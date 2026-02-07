@@ -198,23 +198,26 @@ export default function AddItemPage() {
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   Category *
                 </label>
-                <select
+                <input
+                  type="text"
                   name="category"
                   value={formData.category}
                   onChange={handleChange}
+                  list="category-options"
                   className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+                  placeholder="Select or type a category"
                   required
-                >
-                  <option value="">Select Category</option>
-                  <option value="Electronics">Electronics</option>
-                  <option value="Stationery">Stationery</option>
-                  <option value="Electrical">Electrical</option>
-                  <option value="Home & Kitchen">Home & Kitchen</option>
-                  <option value="Clothing">Clothing</option>
-                  <option value="Sports">Sports</option>
-                  <option value="Toys">Toys</option>
-                  <option value="Books">Books</option>
-                </select>
+                />
+                <datalist id="category-options">
+                  <option value="Electronics" />
+                  <option value="Stationery" />
+                  <option value="Electrical" />
+                  <option value="Home & Kitchen" />
+                  <option value="Clothing" />
+                  <option value="Sports" />
+                  <option value="Toys" />
+                  <option value="Books" />
+                </datalist>
               </div>
 
               <div className="md:col-span-2">

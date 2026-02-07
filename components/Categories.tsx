@@ -3,7 +3,7 @@ export default function Categories() {
     {
       title: 'Fresh Produce',
       desc: 'Fruits, vegetables, herbs & greens',
-      img: 'https://images.unsplash.com/photo-1542838132-dc2c6c6f7e84?q=80&w=900&auto=format&fit=crop'
+      img: 'https://plus.unsplash.com/premium_photo-1664527305901-a3c8bec62850?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8ZnJlc2glMjBwcm9kdWNlfGVufDB8fDB8fHww'
     },
     {
       title: 'Dairy & Bakery',

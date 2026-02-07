@@ -253,6 +253,10 @@ export default function ManageItemsPage() {
                         <span className="text-gray-500">Quantity:</span>
                         <span className="ml-2 font-bold text-lg text-green-600">{item.quantity}</span>
                       </div>
+                      <div className="text-sm">
+                        <span className="text-gray-500">Price:</span>
+                        <span className="ml-2 font-semibold text-gray-900">₹{(item as any).price ?? 0}</span>
+                      </div>
                       <div className="text-sm text-gray-500">
                         Min Level: {item.minStockLevel || 0}
                       </div>

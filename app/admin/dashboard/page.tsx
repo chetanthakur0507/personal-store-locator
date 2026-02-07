@@ -150,9 +150,17 @@ export default function AdminDashboard() {
   };
 
   const handleStaffEdit = (staff: any) => {
+    // Prevent editing admin users through staff form
+    if (staff.role === 'admin') {
+      setStaffMessage('❌ Admin accounts can only be edited via Admin Credentials section');
+      setTimeout(() => setStaffMessage(''), 3000);
+      return;
+    }
+    
     setEditingStaffId(staff.id);
     setStaffForm({ name: staff.name, username: staff.username, password: '' });
     setStaffMessage('');
+    setShowStaffForm(true); // Auto-expand the form when editing
   };
 
   const handleStaffDelete = async (staffId: string) => {
@@ -461,6 +469,13 @@ export default function AdminDashboard() {
                   </span>
                 </button>
 
+                {/* Show messages even when form is collapsed */}
+                {staffMessage && !showStaffForm && (
+                  <p className={`text-sm mb-4 ${staffMessage.includes('✅') ? 'text-green-700' : staffMessage.includes('ℹ️') ? 'text-blue-700' : 'text-red-700'}`}>
+                    {staffMessage}
+                  </p>
+                )}
+
                 {showStaffForm && (
                   <form onSubmit={handleStaffCreate} className="space-y-4">
                     <div>
@@ -544,22 +559,39 @@ export default function AdminDashboard() {
                         <p className="text-xs text-gray-500">@{staff.username}</p>
                       </div>
                       <div className="flex items-center gap-2">
-                        <span className="text-xs px-2 py-1 rounded-full bg-gray-100 text-gray-600">
-                          {staff.role}
+                        <span className={`text-xs px-2 py-1 rounded-full ${
+                          staff.role === 'admin' 
+                            ? 'bg-blue-100 text-blue-700 font-semibold' 
+                            : 'bg-gray-100 text-gray-600'
+                        }`}>
+                          {staff.role === 'admin' ? 'Store Owner' : staff.role}
                         </span>
-                        <button
-                          onClick={() => handleStaffEdit(staff)}
-                          className="text-xs px-3 py-1 rounded-lg bg-blue-50 text-blue-700 hover:bg-blue-100"
-                        >
-                          Edit
-                        </button>
-                        {staff.role !== 'admin' && (
+                        {staff.role === 'admin' ? (
                           <button
-                            onClick={() => handleStaffDelete(staff.id)}
-                            className="text-xs px-3 py-1 rounded-lg bg-red-50 text-red-700 hover:bg-red-100"
+                            onClick={() => {
+                              setShowAdminForm(true);
+                              setStaffMessage('ℹ️ Use Admin Credentials section to edit owner account');
+                              setTimeout(() => setStaffMessage(''), 3000);
+                            }}
+                            className="text-xs px-3 py-1 rounded-lg bg-blue-50 text-blue-700 hover:bg-blue-100"
                           >
-                            Delete
+                            Edit in Admin Section
                           </button>
+                        ) : (
+                          <>
+                            <button
+                              onClick={() => handleStaffEdit(staff)}
+                              className="text-xs px-3 py-1 rounded-lg bg-blue-50 text-blue-700 hover:bg-blue-100"
+                            >
+                              Edit
+                            </button>
+                            <button
+                              onClick={() => handleStaffDelete(staff.id)}
+                              className="text-xs px-3 py-1 rounded-lg bg-red-50 text-red-700 hover:bg-red-100"
+                            >
+                              Delete
+                            </button>
+                          </>
                         )}
                       </div>
                     </div>
