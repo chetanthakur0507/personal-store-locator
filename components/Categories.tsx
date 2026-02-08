@@ -26,7 +26,7 @@ export default function Categories() {
       img: 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?q=80&w=900&auto=format&fit=crop'
     },
     {
-      title: 'Home Care',
+      title: 'Home Cares',
       desc: 'Cleaners, detergents, tools',
       img: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?q=80&w=900&auto=format&fit=crop'
     }
