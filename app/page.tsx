@@ -1,8 +1,5 @@
 'use client';
 
-import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { getAuthUser } from '@/lib/auth';
 import Navbar from '../components/Navbar';
 import Hero from '../components/Hero';
 import Categories from '../components/Categories';
@@ -15,21 +12,6 @@ import StoreMapBanner from '../components/StoreMapBanner';
 import Testimonials from '../components/Testimonials';
 
 export default function Home() {
-  const router = useRouter();
-
-  useEffect(() => {
-    const user = getAuthUser();
-    
-    if (user) {
-      // Redirect based on role
-      if (user.role === 'admin') {
-        router.push('/admin/dashboard');
-      } else {
-        router.push('/user/search');
-      }
-    }
-  }, [router]);
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-amber-50 via-white to-rose-50">
       <Navbar />
@@ -40,10 +22,12 @@ export default function Home() {
       <Section
         title="Top Searched This Week"
         subtitle="Items everyone is looking for"
+        type="featured"
       />
       <Section
         title="Featured Essentials"
         subtitle="Handpicked items for your daily needs"
+        type="featured"
       />
       <StoreMapBanner />
       <Testimonials />

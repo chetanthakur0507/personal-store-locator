@@ -13,7 +13,9 @@ import {
   Store,
   TrendingUp,
   ShoppingCart,
-  Flame
+  Flame,
+  Menu,
+  X
 } from 'lucide-react';
 import Link from 'next/link';
 
@@ -26,6 +28,7 @@ interface Item {
   rack: string;
   shelf: string;
   quantity: number;
+  price?: number;
   minStockLevel?: number;
   description?: string;
   image?: string;
@@ -37,6 +40,7 @@ interface Item {
 export default function UserSearchPage() {
   const router = useRouter();
   const [user, setUser] = useState(getAuthUser());
+  const [menuOpen, setMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState<Item[]>([]);
   const [trendingItems, setTrendingItems] = useState<Item[]>([]);
@@ -198,24 +202,80 @@ export default function UserSearchPage() {
               </div>
             </div>
             <div className="flex items-center gap-2">
+              {/* Mobile Menu Button */}
+              <button
+                onClick={() => setMenuOpen(!menuOpen)}
+                className="lg:hidden flex items-center justify-center p-2 rounded-lg hover:bg-gray-100 transition"
+                title="Menu"
+              >
+                {menuOpen ? (
+                  <X className="w-6 h-6 text-gray-700" />
+                ) : (
+                  <Menu className="w-6 h-6 text-gray-700" />
+                )}
+              </button>
+              
+              {/* Desktop Buttons */}
+              <div className="hidden lg:flex items-center gap-2">
+                <Link
+                  href="/"
+                  className="px-4 py-2 bg-blue-50 hover:bg-blue-100 text-blue-600 rounded-lg transition text-sm font-medium"
+                >
+                  🏠 Home
+                </Link>
+                {isAdmin(user) && (
+                  <Link
+                    href="/admin/dashboard"
+                    className="px-4 py-2 bg-blue-50 hover:bg-blue-100 text-blue-600 rounded-lg transition text-sm font-medium"
+                  >
+                    Dashboard
+                  </Link>
+                )}
+                <button
+                  onClick={handleLogout}
+                  className="flex items-center gap-2 px-4 py-2 text-red-600 hover:bg-red-50 rounded-lg transition"
+                >
+                  <LogOut className="w-5 h-5" />
+                  <span>Logout</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Mobile Menu */}
+        {menuOpen && (
+          <div className="lg:hidden bg-gray-50 border-t border-gray-200 px-4 py-4">
+            <div className="flex flex-col gap-3">
+              <Link
+                href="/"
+                onClick={() => setMenuOpen(false)}
+                className="flex items-center gap-2 px-4 py-2 text-sm text-blue-600 hover:bg-blue-50 rounded-lg transition font-semibold"
+              >
+                🏠 Home
+              </Link>
               {isAdmin(user) && (
                 <Link
                   href="/admin/dashboard"
-                  className="px-4 py-2 bg-blue-50 hover:bg-blue-100 text-blue-600 rounded-lg transition text-sm font-medium"
+                  onClick={() => setMenuOpen(false)}
+                  className="flex items-center gap-2 px-4 py-2 text-sm text-blue-600 hover:bg-blue-50 rounded-lg transition font-semibold"
                 >
                   Dashboard
                 </Link>
               )}
               <button
-                onClick={handleLogout}
-                className="flex items-center gap-2 px-4 py-2 text-red-600 hover:bg-red-50 rounded-lg transition"
+                onClick={() => {
+                  handleLogout();
+                  setMenuOpen(false);
+                }}
+                className="flex items-center gap-2 px-4 py-2 text-sm text-red-600 hover:bg-red-50 rounded-lg transition font-semibold text-left"
               >
-                <LogOut className="w-5 h-5" />
-                <span className="hidden sm:inline">Logout</span>
+                <LogOut className="w-4 h-4" />
+                Logout
               </button>
             </div>
           </div>
-        </div>
+        )}
       </header>
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -303,6 +363,14 @@ export default function UserSearchPage() {
                           
                           {item.description && (
                             <p className="text-gray-600 mb-4">{item.description}</p>
+                          )}
+
+                          {/* Price Display */}
+                          {item.price !== undefined && item.price > 0 && (
+                            <div className="mb-4">
+                              <p className="text-sm text-gray-600">Price</p>
+                              <p className="text-2xl font-bold text-green-600">₹{item.price.toFixed(2)}</p>
+                            </div>
                           )}
 
                   {/* Stock Status */}
@@ -461,6 +529,14 @@ export default function UserSearchPage() {
                       <p className="text-gray-600 text-sm mb-3 line-clamp-2">
                         {item.description}
                       </p>
+                    )}
+
+                    {/* Price Display */}
+                    {item.price !== undefined && item.price > 0 && (
+                      <div className="mb-3 p-3 bg-green-50 rounded-lg border border-green-200">
+                        <p className="text-xs text-gray-600 font-medium mb-1">Price</p>
+                        <p className="text-xl font-bold text-green-600">₹{item.price.toFixed(2)}</p>
+                      </div>
                     )}
 
                     {/* Sales Stats Box */}

@@ -9,8 +9,10 @@ export async function GET(request: NextRequest) {
     const searchQuery = request.nextUrl.searchParams.get('search') || '';
     const category = request.nextUrl.searchParams.get('category') || '';
     const trending = request.nextUrl.searchParams.get('trending') === 'true';
+    const limitParam = request.nextUrl.searchParams.get('limit');
+    const limit = limitParam ? parseInt(limitParam) : 10;
 
-    let query: any = {};
+    const query = {};
 
     if (searchQuery) {
       query.$or = [
@@ -24,14 +26,14 @@ export async function GET(request: NextRequest) {
       query.category = category;
     }
 
-    let sortOrder: any = { createdAt: -1 };
+    let sortOrder = { createdAt: -1 };
     
     // If trending is requested, sort by totalSoldUnits and saleCount
     if (trending) {
       sortOrder = { totalSoldUnits: -1, saleCount: -1, createdAt: -1 };
     }
 
-    const items = await Item.find(query).sort(sortOrder);
+    const items = await Item.find(query).sort(sortOrder).limit(limit);
 
     return NextResponse.json(
       { success: true, data: items },
