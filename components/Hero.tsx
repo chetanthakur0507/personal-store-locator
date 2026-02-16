@@ -4,7 +4,7 @@ export default function Hero() {
   return (
     <section className="mx-auto grid max-w-6xl items-center gap-10 px-6 pb-16 pt-2 md:grid-cols-2">
       <div>
-        <p className="mb-3 inline-flex items-center rounded-full bg-rose-100 px-3 py-1 text-xs font-semibold text-rose-700">
+        <p className="mb-3 inline-flex items-center rounded-full bg-[#FFCE99] px-3 py-1 text-xs font-semibold text-[#E67E00]">
           Neighborhood Supermarket
         </p>
         <h1 className="text-4xl font-bold tracking-tight text-gray-900 md:text-5xl">
@@ -18,13 +18,13 @@ export default function Hero() {
         <div className="mt-6 flex flex-wrap items-center gap-3">
           <Link
             href="/login"
-            className="rounded-lg bg-rose-600 px-5 py-3 text-sm font-semibold text-white shadow hover:bg-rose-700"
+            className="rounded-lg bg-[#FF9644] px-5 py-3 text-sm font-semibold text-white shadow hover:bg-[#E67E00]"
           >
             Login to Continue
           </Link>
           <a
             href="#categories"
-            className="rounded-lg border border-rose-200 px-5 py-3 text-sm font-semibold text-rose-700 hover:bg-rose-50"
+            className="rounded-lg border border-[#FFCE99] px-5 py-3 text-sm font-semibold text-[#E67E00] hover:bg-[#FFF5E6]"
           >
             Dekho Kya Milta Hai
           </a>
@@ -35,13 +35,13 @@ export default function Hero() {
             Fresh produce daily
           </div>
           <div className="flex items-center gap-2">
-            <span className="h-2 w-2 rounded-full bg-rose-500"></span>
+            <span className="h-2 w-2 rounded-full bg-[#FF9644]"></span>
             Best local prices
           </div>
         </div>
       </div>
       <div className="relative">
-        <div className="absolute -inset-6 rounded-3xl bg-rose-100 blur-3xl"></div>
+        <div className="absolute -inset-6 rounded-3xl bg-[#FFCE99] blur-3xl"></div>
         <div className="relative grid gap-4">
           <div className="rounded-3xl bg-white p-3 shadow-xl">
             <img

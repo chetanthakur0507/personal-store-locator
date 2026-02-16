@@ -43,13 +43,13 @@ export default function StoreMapPage() {
   const selectedSectionData = storeSections.find(s => s.id === selectedSection);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-amber-50 via-white to-rose-50">
+    <div className="min-h-screen bg-gradient-to-br from-[#FFFDF1] via-white to-[#FFF5E6]">
       <Navbar />
       
       <div className="container mx-auto px-4 py-8 max-w-7xl">
         {/* Header */}
         <div className="mb-8">
-          <Link href="/" className="inline-flex items-center text-rose-600 hover:text-rose-700 mb-4">
+          <Link href="/" className="inline-flex items-center text-[#FF9644] hover:text-[#E67E00] mb-4">
             <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
             </svg>
@@ -67,7 +67,7 @@ export default function StoreMapPage() {
               placeholder="Search for a section..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full px-4 py-3 pl-12 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent"
+              className="w-full px-4 py-3 pl-12 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#FF9644] focus:border-transparent"
             />
             <svg
               className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400"
@@ -261,7 +261,7 @@ export default function StoreMapPage() {
 
                   <Link
                     href={`/user/search?category=${selectedSectionData.category}`}
-                    className="block w-full text-center bg-rose-600 text-white py-3 rounded-lg font-semibold hover:bg-rose-700 transition"
+                    className="block w-full text-center bg-[#FF9644] text-white py-3 rounded-lg font-semibold hover:bg-[#E67E00] transition"
                   >
                     View Items in this Section
                   </Link>

@@ -35,7 +35,7 @@ export default function Testimonials() {
         {testimonials.map((testimonial, idx) => (
           <div
             key={idx}
-            className="rounded-2xl bg-white p-6 shadow-sm border border-rose-100 transition-all duration-300 hover:-translate-y-2 hover:shadow-lg animate-fade-in-delayed"
+            className="rounded-2xl bg-white p-6 shadow-sm border border-[#FFCE99] transition-all duration-300 hover:-translate-y-2 hover:shadow-lg animate-fade-in-delayed"
             style={{ animationDelay: `${idx * 100}ms` }}
           >
             {/* Stars */}
@@ -53,7 +53,7 @@ export default function Testimonials() {
             </p>
 
             {/* Author */}
-            <div className="border-t border-rose-100 pt-4">
+            <div className="border-t border-[#FFCE99] pt-4">
               <p className="font-semibold text-gray-900">
                 {testimonial.author}
               </p>

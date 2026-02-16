@@ -7,10 +7,10 @@ export default function Offers() {
 
   return (
     <section id="offers" className="mx-auto max-w-6xl px-6 py-10">
-      <div className="grid gap-6 rounded-3xl bg-white p-8 shadow-sm border border-rose-100 md:grid-cols-3">
+      <div className="grid gap-6 rounded-3xl bg-white p-8 shadow-sm border border-[#FFCE99] md:grid-cols-3">
         {offers.map((item) => (
-          <div key={item.title} className="rounded-2xl border border-rose-100 p-5 bg-gradient-to-br from-rose-50 to-white">
-            <p className="text-xs font-semibold text-rose-600">{item.tag}</p>
+          <div key={item.title} className="rounded-2xl border border-[#FFCE99] p-5 bg-gradient-to-br from-[#FFF5E6] to-white">
+            <p className="text-xs font-semibold text-[#FF9644]">{item.tag}</p>
             <h3 className="mt-2 text-lg font-semibold text-gray-900">{item.title}</h3>
             <p className="mt-2 text-sm text-gray-600">{item.desc}</p>
           </div>

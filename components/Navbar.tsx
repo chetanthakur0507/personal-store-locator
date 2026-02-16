@@ -25,7 +25,7 @@ export default function Navbar() {
     <header className="w-full bg-white border-b border-gray-200">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 sm:px-6 py-3 sm:py-6">
         <Link href="/" className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
-          <div className="h-10 w-10 rounded-xl bg-rose-600 text-white flex items-center justify-center font-bold shadow-lg shadow-rose-200">
+          <div className="h-10 w-10 rounded-xl bg-[#FF9644] text-white flex items-center justify-center font-bold shadow-lg shadow-[#FFCE99]">
             SM
           </div>
           <div className="hidden sm:block">
@@ -78,7 +78,7 @@ export default function Navbar() {
           ) : (
             <Link
               href="/login"
-              className="hidden lg:block rounded-lg bg-rose-600 px-3 sm:px-4 py-2 text-xs sm:text-sm font-semibold text-white shadow hover:bg-rose-700 transition whitespace-nowrap"
+              className="hidden lg:block rounded-lg bg-[#FF9644] px-3 sm:px-4 py-2 text-xs sm:text-sm font-semibold text-white shadow hover:bg-[#E67E00] transition whitespace-nowrap"
             >
               Login
             </Link>
@@ -141,7 +141,7 @@ export default function Navbar() {
               <Link
                 href="/login"
                 onClick={() => setMenuOpen(false)}
-                className="px-4 py-2 text-sm text-white bg-rose-600 hover:bg-rose-700 rounded-lg transition font-semibold text-center"
+                className="px-4 py-2 text-sm text-white bg-[#FF9644] hover:bg-[#E67E00] rounded-lg transition font-semibold text-center"
               >
                 Login
               </Link>

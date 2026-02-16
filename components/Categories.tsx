@@ -43,7 +43,7 @@ export default function Categories() {
       </div>
       <div className="mt-6 grid gap-6 md:grid-cols-3">
         {categories.map((item) => (
-          <div key={item.title} className="group rounded-3xl bg-white p-4 shadow-sm border border-rose-100 transition hover:-translate-y-1 hover:shadow-lg">
+          <div key={item.title} className="group rounded-3xl bg-white p-4 shadow-sm border border-[#FFCE99] transition hover:-translate-y-1 hover:shadow-lg">
             <div className="overflow-hidden rounded-2xl">
               <img
                 src={item.img}

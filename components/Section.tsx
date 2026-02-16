@@ -6,7 +6,7 @@ import ProductCard from './ProductCard';
 interface SectionProps {
   title: string;
   subtitle?: string;
-  type?: 'trending' | 'featured' | 'custom';
+  type?: 'trending' | 'featured' | 'top-searched' | 'custom';
   products?: Array<{
     title: string;
     price: string;
@@ -53,6 +53,8 @@ export default function Section({
 
         if (type === 'trending') {
           url = '/api/items?trending=true&limit=4';
+        } else if (type === 'top-searched') {
+          url = '/api/items/trending?limit=4';
         }
 
         const response = await fetch(url);
@@ -72,6 +74,14 @@ export default function Section({
     };
 
     fetchItems();
+
+    // Auto-refresh for top-searched and trending items every 30 seconds
+    const refreshInterval = (type === 'top-searched' || type === 'trending') ? 30000 : undefined;
+    
+    if (refreshInterval) {
+      const interval = setInterval(fetchItems, refreshInterval);
+      return () => clearInterval(interval);
+    }
   }, [type]);
 
   // Determine which items to display
@@ -88,7 +98,7 @@ export default function Section({
 
       {loading ? (
         <div className="flex justify-center items-center py-12">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-4 border-rose-600"></div>
+          <div className="animate-spin rounded-full h-8 w-8 border-b-4 border-[#FF9644]"></div>
         </div>
       ) : itemsToDisplay && itemsToDisplay.length > 0 ? (
         <div className="grid gap-6 md:grid-cols-4 animate-fade-in-delayed">

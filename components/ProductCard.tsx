@@ -45,9 +45,9 @@ export default function ProductCard({
 
   return (
     <Link href={itemLink}>
-      <div className="group rounded-2xl bg-white p-4 shadow-sm border border-rose-100 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl cursor-pointer">
+      <div className="group rounded-2xl bg-white p-4 shadow-sm border border-[#FFCE99] transition-all duration-300 hover:-translate-y-2 hover:shadow-xl cursor-pointer">
         {/* Product Image */}
-        <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-rose-50 to-amber-50 h-40 mb-4">
+        <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-[#FFF5E6] to-[#FFFDF1] h-40 mb-4">
           {image ? (
             <img
               src={image}
@@ -62,7 +62,7 @@ export default function ProductCard({
 
           {/* Stock Badge */}
           {stockText && (
-            <span className="absolute top-2 right-2 inline-block bg-rose-600 text-white text-xs font-semibold px-3 py-1 rounded-full">
+            <span className="absolute top-2 right-2 inline-block bg-[#FF9644] text-white text-xs font-semibold px-3 py-1 rounded-full">
               {stockText}
             </span>
           )}
@@ -73,7 +73,7 @@ export default function ProductCard({
           {itemName}
         </h4>
 
-        <p className="text-lg font-bold text-rose-600 mt-2">{displayPrice}</p>
+        <p className="text-lg font-bold text-[#FF9644] mt-2">{displayPrice}</p>
 
         {location && (
           <p className="text-xs text-gray-500 mt-2">📍 {location}</p>
@@ -83,7 +83,7 @@ export default function ProductCard({
           <p className="text-xs text-blue-600 mt-1">📁 {category}</p>
         )}
 
-        <button className="w-full mt-4 rounded-lg bg-rose-600 px-3 py-2 text-sm font-semibold text-white transition hover:bg-rose-700">
+        <button className="w-full mt-4 rounded-lg bg-[#FF9644] px-3 py-2 text-sm font-semibold text-white transition hover:bg-[#E67E00]">
           View Details
         </button>
       </div>

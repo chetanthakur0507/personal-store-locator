@@ -175,7 +175,7 @@ export default function AddItemPage() {
           {/* Item Information */}
           <div className="mb-8">
             <h2 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-              <Package className="w-5 h-5 text-blue-600" />
+              <Package className="w-5 h-5 text-[#FF9644]" />
               Item Information
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

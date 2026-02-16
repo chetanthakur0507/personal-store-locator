@@ -491,7 +491,7 @@ export default function EditItemPage() {
                 <button
                   type="submit"
                   disabled={saving}
-                  className="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition flex items-center gap-2 disabled:opacity-60"
+                  className="px-6 py-2.5 bg-[#FF9644] hover:bg-[#E67E00] text-white font-medium rounded-lg transition flex items-center gap-2 disabled:opacity-60"
                 >
                   <Save className="w-5 h-5" />
                   {saving ? 'Saving...' : 'Save Changes'}

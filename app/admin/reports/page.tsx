@@ -123,7 +123,7 @@ export default function ReportsPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {loading ? (
           <div className="flex items-center justify-center py-12">
-            <Loader className="w-8 h-8 text-blue-600 animate-spin" />
+            <Loader className="w-8 h-8 text-[#FF9644] animate-spin" />
           </div>
         ) : stats ? (
           <>
@@ -132,7 +132,7 @@ export default function ReportsPage() {
               <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
                 <div className="flex items-center justify-between mb-2">
                   <p className="text-sm font-medium text-gray-600">Total Items</p>
-                  <Package className="w-5 h-5 text-blue-600" />
+                  <Package className="w-5 h-5 text-[#FF9644]" />
                 </div>
                 <p className="text-3xl font-bold text-gray-900">{stats.totalItems}</p>
               </div>
@@ -166,10 +166,10 @@ export default function ReportsPage() {
 
             {/* Low Stock Alert */}
             {lowStockItems.length > 0 && (
-              <div className="bg-orange-50 border-2 border-orange-200 rounded-xl p-6 mb-8">
+              <div className="bg-[#FFF5E6] border-2 border-[#FFCE99] rounded-xl p-6 mb-8">
                 <div className="flex items-center gap-3 mb-4">
-                  <AlertTriangle className="w-6 h-6 text-orange-600" />
-                  <h2 className="text-xl font-bold text-orange-900">
+                  <AlertTriangle className="w-6 h-6 text-[#FF9644]" />
+                  <h2 className="text-xl font-bold text-[#E67E00]">
                     Low Stock Alert ({lowStockItems.length} items)
                   </h2>
                 </div>
@@ -186,7 +186,7 @@ export default function ReportsPage() {
                         </p>
                       </div>
                       <div className="text-right">
-                        <p className="text-2xl font-bold text-orange-600">{item.quantity}</p>
+                        <p className="text-2xl font-bold text-[#FF9644]">{item.quantity}</p>
                         <p className="text-xs text-gray-500">Min: {item.minStockLevel}</p>
                       </div>
                     </div>
@@ -207,11 +207,11 @@ export default function ReportsPage() {
                     <div key={cat._id} className="border border-gray-200 rounded-lg p-4">
                       <div className="flex items-center justify-between mb-3">
                         <span className="font-semibold text-gray-900">{cat._id}</span>
-                        <span className="text-sm font-bold text-blue-600">{cat.count} items</span>
+                        <span className="text-sm font-bold text-[#FF9644]">{cat.count} items</span>
                       </div>
                       <div className="w-full bg-gray-200 rounded-full h-3">
                         <div
-                          className="bg-blue-600 h-3 rounded-full transition-all duration-500"
+                          className="bg-[#FF9644] h-3 rounded-full transition-all duration-500"
                           style={{ width: `${percentage}%` }}
                         />
                       </div>

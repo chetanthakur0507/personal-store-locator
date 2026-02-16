@@ -249,7 +249,7 @@ export default function AdminDashboard() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-4">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
+              <div className="w-10 h-10 bg-[#FF9644] rounded-lg flex items-center justify-center">
                 <Store className="w-6 h-6 text-white" />
               </div>
               <div>
@@ -275,7 +275,7 @@ export default function AdminDashboard() {
               <div className="hidden lg:flex items-center gap-2">
                 <Link
                   href="/"
-                  className="flex items-center gap-2 px-4 py-2 bg-blue-50 hover:bg-blue-100 text-blue-600 rounded-lg transition font-medium"
+                  className="flex items-center gap-2 px-4 py-2 bg-[#FFF5E6] hover:bg-[#FFCE99] text-[#FF9644] rounded-lg transition font-medium"
                 >
                   🏠 Home
                 </Link>
@@ -298,7 +298,7 @@ export default function AdminDashboard() {
               <Link
                 href="/"
                 onClick={() => setMenuOpen(false)}
-                className="flex items-center gap-2 px-4 py-2 text-sm text-blue-600 hover:bg-blue-50 rounded-lg transition font-semibold"
+                  className="flex items-center gap-2 px-4 py-2 text-sm text-[#FF9644] hover:bg-[#FFF5E6] rounded-lg transition font-semibold"
               >
                 🏠 Home
               </Link>
@@ -320,7 +320,7 @@ export default function AdminDashboard() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {loading ? (
           <div className="flex items-center justify-center py-12">
-            <Loader className="w-8 h-8 text-blue-600 animate-spin" />
+            <Loader className="w-8 h-8 text-[#FF9644] animate-spin" />
           </div>
         ) : stats ? (
           <>
@@ -333,8 +333,8 @@ export default function AdminDashboard() {
                     <p className="text-sm font-medium text-gray-600">Total Items</p>
                     <p className="text-3xl font-bold text-gray-900 mt-2">{stats.totalItems}</p>
                   </div>
-                  <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                    <Package className="w-6 h-6 text-blue-600" />
+                  <div className="w-12 h-12 bg-[#FFCE99] rounded-lg flex items-center justify-center">
+                    <Package className="w-6 h-6 text-[#FF9644]" />
                   </div>
                 </div>
                 <p className="text-sm text-gray-500 mt-4">
@@ -385,9 +385,9 @@ export default function AdminDashboard() {
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <Link
                   href="/admin/items/add"
-                  className="flex flex-col items-center justify-center p-4 bg-blue-50 hover:bg-blue-100 rounded-lg transition group"
+                  className="flex flex-col items-center justify-center p-4 bg-[#FFF5E6] hover:bg-[#FFCE99] rounded-lg transition group"
                 >
-                  <div className="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center mb-2 group-hover:scale-110 transition">
+                  <div className="w-12 h-12 bg-[#FF9644] rounded-lg flex items-center justify-center mb-2 group-hover:scale-110 transition">
                     <Plus className="w-6 h-6 text-white" />
                   </div>
                   <span className="text-sm font-medium text-gray-700">Add Item</span>
@@ -395,9 +395,9 @@ export default function AdminDashboard() {
 
                 <Link
                   href="/admin/items"
-                  className="flex flex-col items-center justify-center p-4 bg-purple-50 hover:bg-purple-100 rounded-lg transition group"
+                  className="flex flex-col items-center justify-center p-4 bg-[#FFF5E6] hover:bg-[#FFCE99] rounded-lg transition group"
                 >
-                  <div className="w-12 h-12 bg-purple-600 rounded-lg flex items-center justify-center mb-2 group-hover:scale-110 transition">
+                  <div className="w-12 h-12 bg-[#E67E00] rounded-lg flex items-center justify-center mb-2 group-hover:scale-110 transition">
                     <Package className="w-6 h-6 text-white" />
                   </div>
                   <span className="text-sm font-medium text-gray-700">Manage Items</span>
@@ -415,9 +415,9 @@ export default function AdminDashboard() {
 
                 <Link
                   href="/user/search"
-                  className="flex flex-col items-center justify-center p-4 bg-orange-50 hover:bg-orange-100 rounded-lg transition group"
+                  className="flex flex-col items-center justify-center p-4 bg-[#FFF5E6] hover:bg-[#FFCE99] rounded-lg transition group"
                 >
-                  <div className="w-12 h-12 bg-orange-600 rounded-lg flex items-center justify-center mb-2 group-hover:scale-110 transition">
+                  <div className="w-12 h-12 bg-[#FF9644] rounded-lg flex items-center justify-center mb-2 group-hover:scale-110 transition">
                     <Search className="w-6 h-6 text-white" />
                   </div>
                   <span className="text-sm font-medium text-gray-700">Search Items</span>
@@ -434,7 +434,7 @@ export default function AdminDashboard() {
                   className="w-full flex items-center justify-between mb-4"
                 >
                   <div className="flex items-center gap-2">
-                    <Settings className="w-5 h-5 text-blue-600" />
+                    <Settings className="w-5 h-5 text-[#FF9644]" />
                     <h2 className="text-lg font-semibold text-gray-900">Admin Credentials</h2>
                   </div>
                   <span className={`text-2xl transition-transform ${showAdminForm ? 'rotate-180' : ''}`}>
@@ -496,7 +496,7 @@ export default function AdminDashboard() {
                     <button
                       type="submit"
                       disabled={adminLoading}
-                      className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-lg transition disabled:opacity-50"
+                      className="w-full bg-[#FF9644] hover:bg-[#E67E00] text-white font-semibold py-2 rounded-lg transition disabled:opacity-50"
                     >
                       {adminLoading ? 'Saving...' : 'Save Admin Credentials'}
                     </button>
@@ -523,7 +523,7 @@ export default function AdminDashboard() {
 
                 {/* Show messages even when form is collapsed */}
                 {staffMessage && !showStaffForm && (
-                  <p className={`text-sm mb-4 ${staffMessage.includes('✅') ? 'text-green-700' : staffMessage.includes('ℹ️') ? 'text-blue-700' : 'text-red-700'}`}>
+                  <p className={`text-sm mb-4 ${staffMessage.includes('✅') ? 'text-green-700' : staffMessage.includes('ℹ️') ? 'text-[#FF9644]' : 'text-red-700'}`}>
                     {staffMessage}
                   </p>
                 )}
@@ -613,7 +613,7 @@ export default function AdminDashboard() {
                       <div className="flex items-center gap-2">
                         <span className={`text-xs px-2 py-1 rounded-full ${
                           staff.role === 'admin' 
-                            ? 'bg-blue-100 text-blue-700 font-semibold' 
+                            ? 'bg-[#FFCE99] text-[#562F00] font-semibold' 
                             : 'bg-gray-100 text-gray-600'
                         }`}>
                           {staff.role === 'admin' ? 'Store Owner' : staff.role}
@@ -664,7 +664,7 @@ export default function AdminDashboard() {
                     <div className="flex items-center gap-3">
                       <div className="w-32 bg-gray-200 rounded-full h-2">
                         <div
-                          className="bg-blue-600 h-2 rounded-full"
+                              className="bg-[#FF9644] h-2 rounded-full"
                           style={{ width: `${(cat.count / stats.totalItems) * 100}%` }}
                         />
                       </div>

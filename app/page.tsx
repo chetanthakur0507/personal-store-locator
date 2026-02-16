@@ -13,7 +13,7 @@ import Testimonials from '../components/Testimonials';
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-amber-50 via-white to-rose-50">
+    <div className="min-h-screen bg-gradient-to-br from-[#FFFDF1] via-white to-[#FFF5E6]">
       <Navbar />
       <Hero />
       <Categories />
@@ -22,7 +22,7 @@ export default function Home() {
       <Section
         title="Top Searched This Week"
         subtitle="Items everyone is looking for"
-        type="featured"
+        type="top-searched"
       />
       <Section
         title="Featured Essentials"

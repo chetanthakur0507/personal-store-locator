@@ -3,7 +3,7 @@ import Link from 'next/link';
 export default function StoreMapBanner() {
   return (
     <section className="mx-auto max-w-6xl px-6 py-12">
-      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-rose-600 to-rose-700 px-8 py-16 shadow-xl">
+      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-[#FF9644] to-[#E67E00] px-8 py-16 shadow-xl">
         {/* Animated background elements */}
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-10 right-10 w-40 h-40 rounded-full bg-white animate-pulse"></div>
@@ -25,7 +25,7 @@ export default function StoreMapBanner() {
 
           <Link
             href="/store-map"
-            className="inline-block rounded-lg bg-white px-6 py-3 text-sm font-semibold text-rose-600 shadow-lg transition hover:shadow-xl hover:scale-105"
+            className="inline-block rounded-lg bg-white px-6 py-3 text-sm font-semibold text-[#FF9644] shadow-lg transition hover:shadow-xl hover:scale-105"
           >
             Open Full Store Map
           </Link>

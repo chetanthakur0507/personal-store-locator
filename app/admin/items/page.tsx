@@ -161,7 +161,7 @@ export default function ManageItemsPage() {
                 placeholder="Search by name or category..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+                className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#FF9644] focus:border-transparent outline-none"
               />
             </div>
 
@@ -169,7 +169,7 @@ export default function ManageItemsPage() {
             <select
               value={selectedCategory}
               onChange={(e) => setSelectedCategory(e.target.value)}
-              className="px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+              className="px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#FF9644] focus:border-transparent outline-none"
             >
               <option value="all">All Categories</option>
               {categories.map(cat => (
@@ -182,7 +182,7 @@ export default function ManageItemsPage() {
             {/* Add New Button */}
             <Link
               href="/admin/items/add"
-              className="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition flex items-center justify-center gap-2"
+              className="px-6 py-2.5 bg-[#FF9644] hover:bg-[#E67E00] text-white font-medium rounded-lg transition flex items-center justify-center gap-2"
             >
               <Package className="w-5 h-5" />
               Add New Item
@@ -193,7 +193,7 @@ export default function ManageItemsPage() {
         {/* Items List */}
         {loading ? (
           <div className="flex items-center justify-center py-12">
-            <Loader className="w-8 h-8 text-blue-600 animate-spin" />
+            <Loader className="w-8 h-8 text-[#FF9644] animate-spin" />
           </div>
         ) : filteredItems.length === 0 ? (
           <div className="bg-white rounded-xl shadow-sm p-12 text-center border border-gray-100">
@@ -214,7 +214,7 @@ export default function ManageItemsPage() {
                       <h3 className="text-lg font-semibold text-gray-900">
                         {item.name}
                       </h3>
-                      <span className="px-3 py-1 bg-blue-100 text-blue-700 text-xs font-medium rounded-full">
+                      <span className="px-3 py-1 bg-[#FFCE99] text-[#562F00] text-xs font-medium rounded-full">
                         {item.category}
                       </span>
                       {item.quantity <= (item.minStockLevel || 0) && (
@@ -267,7 +267,7 @@ export default function ManageItemsPage() {
                   <div className="flex gap-2">
                     <Link
                       href={`/admin/items/edit/${item._id}`}
-                      className="px-4 py-2 bg-blue-50 hover:bg-blue-100 text-blue-600 rounded-lg transition flex items-center gap-2"
+                      className="px-4 py-2 bg-[#FFF5E6] hover:bg-[#FFCE99] text-[#FF9644] rounded-lg transition flex items-center gap-2"
                     >
                       <Edit className="w-4 h-4" />
                       Edit
