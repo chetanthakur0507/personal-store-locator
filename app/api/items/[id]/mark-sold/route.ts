@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import connectDB from '@/lib/mongodb';
 import Item from '@/lib/models/Item';
+import Sale from '@/lib/models/Sale';
 
 export async function POST(
   request: NextRequest,
@@ -44,6 +45,16 @@ export async function POST(
     item.lastSoldAt = new Date();
     
     await item.save();
+
+    const totalAmount = (item.price || 0) * quantity;
+    await Sale.create({
+      itemId: item._id,
+      itemName: item.name,
+      priceAtSale: item.price || 0,
+      quantity,
+      totalAmount,
+      soldAt: new Date(),
+    });
 
     return NextResponse.json(
       { 

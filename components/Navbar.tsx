@@ -38,7 +38,7 @@ export default function Navbar() {
         <div className="hidden lg:flex items-center gap-6 text-sm text-gray-600">
           <a href="#categories" className="hover:text-gray-900 transition">Categories</a>
           <a href="#offers" className="hover:text-gray-900 transition">Best Offers</a>
-          <a href="#store" className="hover:text-gray-900 transition">Store View</a>
+          <a href="/store-map" className="hover:text-gray-900 transition">Store View</a>
         </div>
         
         {/* Right Section - Buttons and Mobile Menu */}
@@ -105,7 +105,7 @@ export default function Navbar() {
               🎁 Best Offers
             </a>
             <a 
-              href="#store" 
+              href="/store-map" 
               onClick={() => setMenuOpen(false)}
               className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 rounded-lg transition"
             >

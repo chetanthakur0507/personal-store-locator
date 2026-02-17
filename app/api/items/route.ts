@@ -12,7 +12,7 @@ export async function GET(request: NextRequest) {
     const limitParam = request.nextUrl.searchParams.get('limit');
     const limit = limitParam ? parseInt(limitParam) : 10;
 
-    const query = {};
+    const query: any = {};
 
     if (searchQuery) {
       query.$or = [
@@ -26,7 +26,7 @@ export async function GET(request: NextRequest) {
       query.category = category;
     }
 
-    let sortOrder = { createdAt: -1 };
+    let sortOrder: any = { createdAt: -1 };
     
     // If trending is requested, sort by totalSoldUnits and saleCount
     if (trending) {

@@ -23,6 +23,8 @@ interface Stats {
   totalItems: number;
   totalStock: number;
   categories: Array<{ _id: string; count: number }>;
+  dailySoldUnits: number;
+  dailyRevenue: number;
 }
 
 export default function AdminDashboard() {
@@ -42,6 +44,14 @@ export default function AdminDashboard() {
   const [adminMessage, setAdminMessage] = useState('');
   const [staffLoading, setStaffLoading] = useState(false);
   const [adminLoading, setAdminLoading] = useState(false);
+  const [salesRange, setSalesRange] = useState<'today' | 'yesterday' | 'last7'>('today');
+
+  const formatRupees = (amount: number) => {
+    return `Rs ${amount.toLocaleString('en-IN', { maximumFractionDigits: 2 })}`;
+  };
+
+  const salesRangeLabel =
+    salesRange === 'yesterday' ? 'Yesterday' : salesRange === 'last7' ? 'Last 7 Days' : 'Today';
 
   useEffect(() => {
     const currentUser = getAuthUser();
@@ -58,16 +68,16 @@ export default function AdminDashboard() {
       password: '',
       currentPassword: '',
     });
-    fetchStats();
+    fetchStats('today');
     fetchStaff();
   }, [router]);
 
-  const fetchStats = async () => {
+  const fetchStats = async (range: 'today' | 'yesterday' | 'last7') => {
     try {
       setLoading(true);
       
       // Fetch stats
-      const response = await fetch('/api/stats');
+      const response = await fetch(`/api/stats?range=${range}`);
       const data = await response.json();
       
       console.log('Stats response:', data);
@@ -80,7 +90,9 @@ export default function AdminDashboard() {
         setStats({
           totalItems: 0,
           totalStock: 0,
-          categories: []
+          categories: [],
+          dailySoldUnits: 0,
+          dailyRevenue: 0,
         });
       }
 
@@ -101,11 +113,18 @@ export default function AdminDashboard() {
       setStats({
         totalItems: 0,
         totalStock: 0,
-        categories: []
+        categories: [],
+        dailySoldUnits: 0,
+        dailyRevenue: 0,
       });
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleRangeChange = (value: 'today' | 'yesterday' | 'last7') => {
+    setSalesRange(value);
+    fetchStats(value);
   };
 
   const fetchStaff = async () => {
@@ -325,7 +344,7 @@ export default function AdminDashboard() {
         ) : stats ? (
           <>
             {/* Stats Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
               {/* Total Items */}
               <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
                 <div className="flex items-center justify-between">
@@ -377,12 +396,60 @@ export default function AdminDashboard() {
               </div>
             </div>
 
+            {/* Daily Sales */}
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between mb-3">
+              <h2 className="text-lg font-semibold text-gray-900">Sales Snapshot</h2>
+              <div className="flex items-center gap-2">
+                <span className="text-sm text-gray-600">Range</span>
+                <select
+                  value={salesRange}
+                  onChange={(e) => handleRangeChange(e.target.value as 'today' | 'yesterday' | 'last7')}
+                  className="px-3 py-2 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-[#FF9644] outline-none"
+                >
+                  <option value="today">Today</option>
+                  <option value="yesterday">Yesterday</option>
+                  <option value="last7">Last 7 Days</option>
+                </select>
+              </div>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+              <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm font-medium text-gray-600">Sold Units ({salesRangeLabel})</p>
+                    <p className="text-3xl font-bold text-blue-700 mt-2">
+                      {stats.dailySoldUnits}
+                    </p>
+                  </div>
+                  <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                    <TrendingUp className="w-6 h-6 text-blue-700" />
+                  </div>
+                </div>
+                <p className="text-sm text-gray-500 mt-4">Units sold in this range</p>
+              </div>
+
+              <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm font-medium text-gray-600">Revenue ({salesRangeLabel})</p>
+                    <p className="text-3xl font-bold text-emerald-700 mt-2">
+                      {formatRupees(stats.dailyRevenue)}
+                    </p>
+                  </div>
+                  <div className="w-12 h-12 bg-emerald-100 rounded-lg flex items-center justify-center">
+                    <BarChart3 className="w-6 h-6 text-emerald-700" />
+                  </div>
+                </div>
+                <p className="text-sm text-gray-500 mt-4">Revenue earned in this range</p>
+              </div>
+            </div>
+
             {/* Quick Actions */}
             <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100 mb-8">
               <h2 className="text-lg font-semibold text-gray-900 mb-4">
                 Quick Actions
               </h2>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
                 <Link
                   href="/admin/items/add"
                   className="flex flex-col items-center justify-center p-4 bg-[#FFF5E6] hover:bg-[#FFCE99] rounded-lg transition group"
@@ -421,6 +488,16 @@ export default function AdminDashboard() {
                     <Search className="w-6 h-6 text-white" />
                   </div>
                   <span className="text-sm font-medium text-gray-700">Search Items</span>
+                </Link>
+
+                <Link
+                  href="/admin/sales-report"
+                  className="flex flex-col items-center justify-center p-4 bg-blue-50 hover:bg-blue-100 rounded-lg transition group"
+                >
+                  <div className="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center mb-2 group-hover:scale-110 transition">
+                    <BarChart3 className="w-6 h-6 text-white" />
+                  </div>
+                  <span className="text-sm font-medium text-gray-700">Sales Report</span>
                 </Link>
               </div>
             </div>
