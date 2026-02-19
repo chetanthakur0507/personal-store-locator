@@ -74,12 +74,23 @@ export default function PublicSearchPage() {
   }, [searchQuery, allItems]);
 
   return (
-    <div className="min-h-screen" style={{ backgroundColor: '#FFEEA9' }}>
+    <div className="min-h-screen bg-gradient-to-br from-[#FFFDF1] via-white to-[#FFF5E6]">
       {/* Navbar */}
       <Navbar />
 
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Back to Home Button */}
+        <div className="mb-6">
+          <Link 
+            href="/" 
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg font-semibold transition hover:shadow-md"
+            style={{ backgroundColor: '#FFBF78', color: '#7B4019' }}
+          >
+            ← Back to Home
+          </Link>
+        </div>
+
         {/* Search Bar */}
         <div className="mb-8">
           <div className="relative max-w-2xl mx-auto">

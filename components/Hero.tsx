@@ -22,12 +22,12 @@ export default function Hero() {
           >
             Search Items
           </Link>
-          <a
-            href="#categories"
+          <Link
+            href="/categories"
             className="rounded-lg border border-[#FFCE99] px-5 py-3 text-sm font-semibold text-[#E67E00] hover:bg-[#FFF5E6]"
           >
             Dekho Kya Milta Hai
-          </a>
+          </Link>
         </div>
         <div className="mt-6 flex items-center gap-6 text-sm text-gray-500">
           <div className="flex items-center gap-2">

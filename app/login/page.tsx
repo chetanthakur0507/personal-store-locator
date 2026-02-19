@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { setAuthUser } from '@/lib/auth';
 import { Store, Lock, User } from 'lucide-react';
 
@@ -170,6 +171,17 @@ export default function LoginPage() {
             }}>
               Use the admin or staff credentials created from the Admin Panel.
             </div>
+          </div>
+
+          {/* Back to Home Button */}
+          <div className="mt-6">
+            <Link 
+              href="/" 
+              className="block text-center px-4 py-2 rounded-lg font-semibold transition hover:shadow-md"
+              style={{ backgroundColor: '#FFCE99', color: '#562F00' }}
+            >
+              ← Back to Home
+            </Link>
           </div>
         </div>
 

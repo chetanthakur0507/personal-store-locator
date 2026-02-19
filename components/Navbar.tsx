@@ -36,9 +36,10 @@ export default function Navbar() {
         
         {/* Desktop Navigation */}
         <div className="hidden lg:flex items-center gap-6 text-sm text-gray-600">
-          <a href="#categories" className="hover:text-gray-900 transition">Categories</a>
-          <a href="#offers" className="hover:text-gray-900 transition">Best Offers</a>
-          <a href="/store-map" className="hover:text-gray-900 transition">Store View</a>
+          <Link href="/" className="hover:text-gray-900 transition">Home</Link>
+          <Link href="/categories" className="hover:text-gray-900 transition">Categories</Link>
+          <Link href="/offers" className="hover:text-gray-900 transition">Best Offers</Link>
+          <Link href="/store-map" className="hover:text-gray-900 transition">Store View</Link>
         </div>
         
         {/* Right Section - Buttons and Mobile Menu */}
@@ -90,27 +91,34 @@ export default function Navbar() {
       {menuOpen && (
         <div className="lg:hidden bg-gray-50 border-t border-gray-200 px-4 py-4">
           <div className="flex flex-col gap-3">
-            <a 
-              href="#categories" 
+            <Link 
+              href="/" 
+              onClick={() => setMenuOpen(false)}
+              className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 rounded-lg transition"
+            >
+              🏠 Home
+            </Link>
+            <Link 
+              href="/categories" 
               onClick={() => setMenuOpen(false)}
               className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 rounded-lg transition"
             >
               📁 Categories
-            </a>
-            <a 
-              href="#offers" 
+            </Link>
+            <Link 
+              href="/offers" 
               onClick={() => setMenuOpen(false)}
               className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 rounded-lg transition"
             >
               🎁 Best Offers
-            </a>
-            <a 
+            </Link>
+            <Link 
               href="/store-map" 
               onClick={() => setMenuOpen(false)}
               className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 rounded-lg transition"
             >
               🏪 Store View
-            </a>
+            </Link>
             
             {/* Divider */}
             <div className="border-t border-gray-200 my-2"></div>
