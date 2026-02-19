@@ -17,10 +17,10 @@ export default function Hero() {
         </p>
         <div className="mt-6 flex flex-wrap items-center gap-3">
           <Link
-            href="/login"
+            href="/search"
             className="rounded-lg bg-[#FF9644] px-5 py-3 text-sm font-semibold text-white shadow hover:bg-[#E67E00]"
           >
-            Login to Continue
+            Search Items
           </Link>
           <a
             href="#categories"

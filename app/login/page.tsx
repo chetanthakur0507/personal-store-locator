@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { setAuthUser } from '@/lib/auth';
-import { Store, Lock, User, Loader } from 'lucide-react';
+import { Store, Lock, User } from 'lucide-react';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -11,8 +11,6 @@ export default function LoginPage() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const [initLoading, setInitLoading] = useState(false);
-  const [initMessage, setInitMessage] = useState('');
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -53,61 +51,53 @@ export default function LoginPage() {
     }
   };
 
-  const handleInitialize = async () => {
-    setInitLoading(true);
-    setInitMessage('');
-    try {
-      const response = await fetch('/api/init', {
-        method: 'POST',
-      });
-      const data = await response.json();
-      if (data.success) {
-        setInitMessage(`✅ ${data.message}`);
-      } else {
-        setInitMessage(`❌ Error: ${data.error}`);
-      }
-    } catch (error: any) {
-      setInitMessage(`❌ Error: ${error.message}`);
-    } finally {
-      setInitLoading(false);
-    }
-  };
-
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 px-4">
+    <div className="min-h-screen flex items-center justify-center px-4" style={{ backgroundColor: '#FFFDF1' }}>
       <div className="max-w-md w-full">
         {/* Logo & Title */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-600 rounded-2xl mb-4 shadow-lg">
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl mb-4 shadow-lg" style={{ backgroundColor: '#FF9644' }}>
             <Store className="w-8 h-8 text-white" />
           </div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
+          <h1 className="text-3xl font-bold mb-2" style={{ color: '#562F00' }}>
             Smart Store Locator
           </h1>
-          <p className="text-gray-600">
+          <p style={{ color: '#562F00' }}>
             Find items in your store instantly 🔍
           </p>
         </div>
 
         {/* Login Form */}
-        <div className="bg-white rounded-2xl shadow-xl p-8">
-          <h2 className="text-2xl font-semibold text-gray-800 mb-6">
+        <div className="bg-white rounded-2xl shadow-xl p-8" style={{ borderTop: '4px solid #FF9644' }}>
+          <h2 className="text-2xl font-semibold mb-6" style={{ color: '#562F00' }}>
             Login to Continue
           </h2>
 
           <form onSubmit={handleLogin} className="space-y-5">
             {/* Username */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium mb-2" style={{ color: '#562F00' }}>
                 Username
               </label>
               <div className="relative">
-                <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5" style={{ color: '#FF9644' }} />
                 <input
                   type="text"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
-                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition"
+                  className="w-full pl-10 pr-4 py-3 border-2 rounded-lg outline-none transition"
+                  style={{ 
+                    borderColor: '#FFCE99',
+                    color: '#562F00'
+                  }}
+                  onFocus={(e) => {
+                    e.currentTarget.style.borderColor = '#FF9644';
+                    e.currentTarget.style.boxShadow = '0 0 0 3px rgba(255, 150, 68, 0.1)';
+                  }}
+                  onBlur={(e) => {
+                    e.currentTarget.style.borderColor = '#FFCE99';
+                    e.currentTarget.style.boxShadow = 'none';
+                  }}
                   placeholder="Enter your username"
                   required
                 />
@@ -116,16 +106,28 @@ export default function LoginPage() {
 
             {/* Password */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium mb-2" style={{ color: '#562F00' }}>
                 Password
               </label>
               <div className="relative">
-                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5" style={{ color: '#FF9644' }} />
                 <input
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition"
+                  className="w-full pl-10 pr-4 py-3 border-2 rounded-lg outline-none transition"
+                  style={{ 
+                    borderColor: '#FFCE99',
+                    color: '#562F00'
+                  }}
+                  onFocus={(e) => {
+                    e.currentTarget.style.borderColor = '#FF9644';
+                    e.currentTarget.style.boxShadow = '0 0 0 3px rgba(255, 150, 68, 0.1)';
+                  }}
+                  onBlur={(e) => {
+                    e.currentTarget.style.borderColor = '#FFCE99';
+                    e.currentTarget.style.boxShadow = 'none';
+                  }}
                   placeholder="Enter your password"
                   required
                 />
@@ -134,7 +136,11 @@ export default function LoginPage() {
 
             {/* Error Message */}
             {error && (
-              <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">
+              <div className="border-2 px-4 py-3 rounded-lg text-sm" style={{ 
+                backgroundColor: '#ffe6e6',
+                borderColor: '#FF9644',
+                color: '#562F00'
+              }}>
                 {error}
               </div>
             )}
@@ -143,51 +149,32 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-xl"
+              className="w-full text-white font-semibold py-3 rounded-lg transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-xl"
+              style={{ 
+                backgroundColor: '#FF9644',
+              }}
+              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#E68A3C'}
+              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#FF9644'}
             >
               {loading ? 'Logging in...' : 'Login'}
             </button>
           </form>
 
-          {/* Initialization Section */}
-          <div className="mt-6 pt-6 border-t border-gray-200">
-            <p className="text-sm text-gray-600 font-medium mb-3">
-              First Time? Load Sample Data:
-            </p>
-            <button
-              onClick={handleInitialize}
-              disabled={initLoading}
-              className="w-full flex items-center justify-center gap-2 bg-green-600 hover:bg-green-700 text-white font-semibold py-2 rounded-lg transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              {initLoading ? (
-                <>
-                  <Loader className="w-4 h-4 animate-spin" />
-                  Loading...
-                </>
-              ) : (
-                '📦 Initialize Database'
-              )}
-            </button>
-            {initMessage && (
-              <p className={`mt-2 text-sm ${initMessage.includes('✅') ? 'text-green-700' : 'text-red-700'}`}>
-                {initMessage}
-              </p>
-            )}
-          </div>
-          <div className="mt-6 pt-6 border-t border-gray-200">
-            <p className="text-sm text-gray-600 font-medium mb-3">
+          <div className="mt-6 pt-6 border-t" style={{ borderTopColor: '#FFCE99' }}>
+            <p className="text-sm font-medium mb-3" style={{ color: '#562F00' }}>
               Account Credentials:
             </p>
-            <div className="bg-blue-50 p-3 rounded-lg text-xs text-blue-800">
+            <div className="p-3 rounded-lg text-xs" style={{ 
+              backgroundColor: '#FFCE99',
+              color: '#562F00'
+            }}>
               Use the admin or staff credentials created from the Admin Panel.
             </div>
           </div>
         </div>
 
         {/* Footer */}
-        <p className="text-center text-gray-500 text-sm mt-6">
-          Built with Next.js & Tailwind CSS 💙
-        </p>
+        
       </div>
     </div>
   );
