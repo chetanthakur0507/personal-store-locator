@@ -1,0 +1,24 @@
+{
+  "name": "Smart Store Locator",
+  "short_name": "Smart Store",
+  "description": "Role-based smart store item locator and storefront experience",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#FF9644",
+  "icons": [
+    {
+      "src": "/pwa%20logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/pwa%20logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
