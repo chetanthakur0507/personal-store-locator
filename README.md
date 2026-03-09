@@ -109,11 +109,11 @@ Features:
 
 # 🔐 Role Based Access Control
 
-| Role         | Permissions                                            |
-| ------------ | ------------------------------------------------------ |
-| Admin        | Full inventory management, analytics, staff management |
-| Staff        | Search items, sell items, update stock                 |
-| Public Users | Can search item locations (no login required)          |
+| Role         | Permissions                                                     |
+| ------------ | ------------------------------------------------------          |
+| Admin        | Full inventory management, analytics, staff management          |
+| Staff        | Search items, sell items, update stock                          |
+| Public Users | Can search item locations and see the price (no login required) |
 
 ---
 
@@ -177,20 +177,20 @@ This allows staff to easily use the system directly on the **shop floor**.
 Live Demo
 
 ```
-Add your live project link here
+https://personal-store-locator.vercel.app/
 ```
 
 GitHub Repository
 
 ```
-Add your repository link here
+https://github.com/chetanthakur0507/personal-store-locator
 ```
 
 ---
 
 # 🎥 Demo
 
-Admin Dashboard walkthrough video will be uploaded soon on **LinkedIn**.
+Admin Dashboard walkthrough video on Linkedin 
 
 ---
 
@@ -204,19 +204,7 @@ Admin Dashboard walkthrough video will be uploaded soon on **LinkedIn**.
 
 ---
 
-# 🤝 Contributing
 
-Contributions are welcome!
-
-If you'd like to improve this project:
-
-1. Fork the repository
-2. Create your feature branch
-3. Commit your changes
-4. Push to the branch
-5. Open a Pull Request
-
----
 
 # 📬 Contact
 
@@ -227,3 +215,4 @@ If you have any suggestions or feedback feel free to connect.
 ---
 
 ⭐ If you like this project, consider giving it a **star on GitHub**!
+
